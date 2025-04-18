@@ -1,0 +1,96 @@
+% -----------------------------------------------------------------
+% @file table.tex
+% @brief Some simple examples about how to typeset tables in LaTeX
+% effectively.
+% @date 2025-04-17
+% @author LHT
+% -----------------------------------------------------------------
+
+\documentclass{article}
+\usepackage{array}
+\usepackage{lipsum} % For dummy text.
+
+% Create new column types.
+% Set column width, horizontally centered and vertically top-aligned.
+\newcolumntype{P}[1]{>{\centering\arraybackslash}p{#1}}
+% Set column width, horizontally and vertically centered.
+\newcolumntype{M}[1]{>{\centering\arraybackslash}m{#1}}
+
+% Set column width using a fraction of \textwidth, horizontally 
+% centered and vertically top-aligned.
+\newcolumntype{Q}[1]{>{\centering\arraybackslash}p{#1\textwidth}}
+% Set column width using a fraction of \textwidth, horizontally and vertically
+% centered.
+\newcolumntype{N}[1]{>{\centering\arraybackslash}m{#1\textwidth}}
+
+\begin{document}
+
+\section{General Tables}
+
+% Show the new column type P, horizontally centered and vertically top-aligned.
+\begin{table}
+	\centering
+	\caption{New Column Type P}
+	\begin{tabular}{|P{2cm}|P{2cm}|P{5cm}|}
+		\hline
+		\textbf{Column 1} & \textbf{Column 2} & \textbf{Column 3} \\
+		\hline
+		Row 1 & Cell 1,2 & \lipsum[1][1] \\ \hline
+		Row 2 & Cell 2, 2 & \lipsum[2][1-2] \\ \hline
+	\end{tabular}
+\end{table}
+
+% Show the new column type M, horizontally and vertically centered.
+\begin{table}
+	\centering
+	\caption{New Column Type M}
+	\begin{tabular}{|M{2cm}|M{2cm}|M{5cm}|}
+		\hline
+		\textbf{Column 1} & \textbf{Column 2} & \textbf{Column 3} \\
+		\hline
+		Row 1 & Cell 1,2 & \lipsum[1][1] \\ \hline
+		Row 2 & Cell 2, 2 & \lipsum[2][1-2] \\ \hline
+	\end{tabular}
+\end{table}
+
+% Show the new column type Q, horizontally centered and vertically top-aligned.
+\begin{table}
+	\centering
+	\caption{New Column Type Q}
+	\begin{tabular}{|Q{0.2}|Q{0.2}|Q{0.4}|}
+		\hline
+		\textbf{Column 1} & \textbf{Column 2} & \textbf{Column 3} \\
+		\hline
+		Row 1 & Cell 1,2 & \lipsum[1][1] \\ \hline
+		Row 2 & Cell 2, 2 & \lipsum[2][1-2] \\ \hline
+	\end{tabular}
+\end{table}
+
+
+% Show the new column type N, horizontally and vertically centered.
+\begin{table}
+	\centering
+	\caption{New Column Type C}
+	\begin{tabular}{|N{0.2}|N{0.2}|N{0.4}|}
+		\hline
+		\textbf{Column 1} & \textbf{Column 2} & \textbf{Column 3} \\
+		\hline
+		Row 1 & Cell 1,2 & \lipsum[1][1] \\ \hline
+		Row 2 & Cell 2, 2 & \lipsum[2][1-2] \\ \hline
+	\end{tabular}
+\end{table}
+
+Show the strange vertical alignment of the cells in a row.
+\begin{table}
+	\centering
+	\caption{The strange vertical alignment}
+	\begin{tabular}{|p{0.3\textwidth}|m{0.3\textwidth}|b{0.3\textwidth}|}
+		\hline
+		\textbf{Column Type p} & \textbf{Column Type m} & \textbf{Column Type b} \\
+		\hline
+		\lipsum[1][1-2] & \lipsum[2][1-2] & \lipsum[3][1-2] \\
+		\hline
+	\end{tabular}
+\end{table}
+
+\end{document}
