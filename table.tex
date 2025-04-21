@@ -12,6 +12,7 @@
 \usepackage{multirow} % for multirow cells. 
 \usepackage{xcolor} % for color.
 \usepackage{float} % for float environments.
+\usepackage{longtable} % for long tables.
  
 % -----------------------------------------------------------------
 % Create new column types for tables.
@@ -200,5 +201,55 @@ Set all multirow cells in the followling table to be horizontally centered.
 		\end{tabular}
 	}
 \end{table}
+
+\newpage
+\section{Long Tables}
+The long table breaks the page between rows spanned by \incode{\multirow}.
+\vspace{38\baselineskip}
+
+\begin{longtable}{|c|c|c|}
+	\caption{The Long Table Breaks the Page, Orignal} \\
+    \hline
+    \textbf{Column 1} & \textbf{Column 2} & \textbf{Column 3} \\ \hline
+    \endfirsthead
+    \hline
+    \textbf{Column 1} & \textbf{Column 2} & \textbf{Column 3} \\ \hline
+    \endhead
+    \hline
+    \endfoot
+    \hline
+    \endlastfoot
+
+    \multirow{6}{*}{Row 1} & Cell 1,2 & Cell 1,3 \\ \cline{2-3}
+                        & Cell 2,2 & Cell 2,3 \\ \cline{2-3}
+                        & Cell 3,2 & Cell 3,3 \\ \cline{2-3}
+                        & Cell 4,2 & Cell 4,3 \\ \cline{2-3}
+                        & Cell 5,2 & Cell 5,3 \\ \cline{2-3}
+                        & Cell 6,2 & Cell 6,3 \\ \cline{2-3}
+\end{longtable}
+
+Mannualy split the multirow cell to repair this.
+\vspace{32\baselineskip}
+
+\begin{longtable}{|c|c|c|}
+	\caption{The Long Table Breaks the Page, Repaired} \\
+    \hline
+    \textbf{Column 1} & \textbf{Column 2} & \textbf{Column 3} \\ \hline
+    \endfirsthead
+    \hline
+    \textbf{Column 1} & \textbf{Column 2} & \textbf{Column 3} \\ \hline
+    \endhead
+    \hline
+    \endfoot
+    \hline
+    \endlastfoot
+
+    \multirow{1}{*}{Row 1} & Cell 1,2 & Cell 1,3 \\ \hline
+    \multirow{5}{*}{Row 1} & Cell 2,2 & Cell 2,3 \\ \cline{2-3}
+    & Cell 3,2 & Cell 3,3 \\ \cline{2-3}
+    & Cell 4,2 & Cell 4,3 \\ \cline{2-3}
+    & Cell 5,2 & Cell 5,3 \\ \cline{2-3}
+    & Cell 6,2 & Cell 6,3 \\ \cline{2-3}
+\end{longtable}
 
 \end{document}
