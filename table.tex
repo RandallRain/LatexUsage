@@ -8,9 +8,14 @@
 
 \documentclass{article}
 \usepackage{array}
-\usepackage{lipsum} % For dummy text.
-
-% Create new column types.
+\usepackage{lipsum} % for dummy text.
+\usepackage{multirow} % for multirow cells. 
+\usepackage{xcolor} % for color.
+\usepackage{float} % for float environments.
+ 
+% -----------------------------------------------------------------
+% Create new column types for tables.
+% -----------------------------------------------------------------
 % Set column width, horizontally centered and vertically top-aligned.
 \newcolumntype{P}[1]{>{\centering\arraybackslash}p{#1}}
 % Set column width, horizontally and vertically centered.
@@ -23,11 +28,38 @@
 % centered.
 \newcolumntype{N}[1]{>{\centering\arraybackslash}m{#1\textwidth}}
 
+% -----------------------------------------------------------------
+% Change the default position for float envrionments.
+% H: absoulute here.
+% -----------------------------------------------------------------
+\makeatletter
+\renewcommand{\fps@figure}{H}
+\renewcommand{\fps@table}{H}
+\makeatother
+
+% -----------------------------------------------------------------
+% Define the inline code command.
+% -----------------------------------------------------------------
+% Define a light‐gray background color
+\definecolor{inlinecodebg}{RGB}{235,235,235}
+% Define the inline code command.
+\newcommand{\incode}[1]{%
+  	\begingroup
+    	\setlength{\fboxsep}{1pt}% % padding between text and box.
+    	\colorbox{inlinecodebg}{\ttfamily\detokenize{#1}}%
+  	\endgroup
+}
+
+% -----------------------------------------------------------------
+% Other settings.
+% -----------------------------------------------------------------
+% Set horizontally centered for all multirow cells.
+%\renewcommand\multirowsetup{\centering\arraybackslash}
+
+
 \begin{document}
-
 \section{General Tables}
-
-% Show the new column type P, horizontally centered and vertically top-aligned.
+Show the new column type P, horizontally centered and vertically top-aligned.
 \begin{table}
 	\centering
 	\caption{New Column Type P}
@@ -40,7 +72,7 @@
 	\end{tabular}
 \end{table}
 
-% Show the new column type M, horizontally and vertically centered.
+Show the new column type M, horizontally and vertically centered.
 \begin{table}
 	\centering
 	\caption{New Column Type M}
@@ -53,7 +85,7 @@
 	\end{tabular}
 \end{table}
 
-% Show the new column type Q, horizontally centered and vertically top-aligned.
+Show the new column type Q, horizontally centered and vertically top-aligned.
 \begin{table}
 	\centering
 	\caption{New Column Type Q}
@@ -66,8 +98,7 @@
 	\end{tabular}
 \end{table}
 
-
-% Show the new column type N, horizontally and vertically centered.
+Show the new column type N, horizontally and vertically centered.
 \begin{table}
 	\centering
 	\caption{New Column Type C}
@@ -91,6 +122,83 @@ Show the strange vertical alignment of the cells in a row.
 		\lipsum[1][1-2] & \lipsum[2][1-2] & \lipsum[3][1-2] \\
 		\hline
 	\end{tabular}
+\end{table}
+
+\section{Merge Cells}
+\subsection{Merge Multi-Rows}
+Use \incode{\multirow} to merge multirow cells for short text
+\begin{table}
+	\centering
+	\caption{Merge Cells, Short Text.}
+	\begin{tabular}{|m{0.2\textwidth}|m{0.2\textwidth}|m{0.4\textwidth}|}
+		\hline
+		\textbf{Column 1} & \textbf{Column 2} & \textbf{Column 3} \\
+		\hline
+		\multirow{2}{=}{Row 1 2} & Cell 1,2 & Short Text 1, 2 \\ \cline{2-3}
+		& Cell 2, 2 & Short Text 2, 2\\ \hline
+		Row 3 & Cell 3, 2 & Short Text 3, 3 \\ \hline
+	\end{tabular}
+\end{table}
+
+Use \incode{\multirow} to merge multirow cells for long text, the original layout.
+\begin{table}
+	\centering
+	\caption{Merge Rows, Long Text, Orignal Layout.}
+	\begin{tabular}{|m{0.2\textwidth}|m{0.2\textwidth}|m{0.4\textwidth}|}
+		\hline
+		\textbf{Column 1} & \textbf{Column 2} & \textbf{Column 3} \\
+		\hline
+		\multirow{2}{=}{Row 1 2} & Cell 1,2 & \lipsum[1][1-2] \\ \cline{2-3}
+		& Cell 2, 2 & \lipsum[2][1-2]\\ \hline
+		Row 3 & Cell 3, 2 & \lipsum[3][1-2] \\ \hline
+	\end{tabular}
+\end{table}
+
+Use \incode{nrows} to adjust the vertically centered alignment of the multirow cell.
+\begin{table}
+	\centering
+	\caption{Merge Rows, Long Text, Using nrows.}
+	\begin{tabular}{|m{0.2\textwidth}|m{0.2\textwidth}|m{0.4\textwidth}|}
+		\hline
+		\textbf{Column 1} & \textbf{Column 2} & \textbf{Column 3} \\
+		\hline
+		\multirow{5}{=}{Row 1 2} & Cell 1,2 & \lipsum[1][1-2] \\ \cline{2-3}
+		& Cell 2, 2 & \lipsum[2][1-2]\\ \hline
+		Row 3 & Cell 3, 2 & \lipsum[3][1-2] \\ \hline
+	\end{tabular}
+\end{table}
+
+Use vmove to adjust the vertically centered alignment of the multirow cell,
+using \incode{\baselineskip} as the unit.
+\begin{table}
+	\centering
+	\caption{Merge Rows, Long Text, Using vmove.}
+	\begin{tabular}{|m{0.2\textwidth}|m{0.2\textwidth}|m{0.4\textwidth}|}
+		\hline
+		\textbf{Column 1} & \textbf{Column 2} & \textbf{Column 3} \\
+		\hline
+		\multirow{2}{=}[-1.8\baselineskip]{Row 1 2} & Cell 1,2 & \lipsum[1][1-2] \\ \cline{2-3}
+		& Cell 2, 2 & \lipsum[2][1-2]\\ \hline
+		Row 3 & Cell 3, 2 & \lipsum[3][1-2] \\ \hline
+	\end{tabular}
+\end{table}
+
+Set all multirow cells in the followling table to be horizontally centered.
+\begin{table}
+	\centering
+	\caption{Merge Rows, Long Text, horizontally and Vertically Centered.}
+	{
+		% Redefine the \multirowsetup command in a group.
+		\renewcommand\multirowsetup{\centering\arraybackslash}
+		\begin{tabular}{|M{0.2\textwidth}|M{0.2\textwidth}|m{0.4\textwidth}|}
+			\hline
+			\textbf{Column 1} & \textbf{Column 2} & \textbf{Column 3} \\
+			\hline
+			\multirow{2}{=}[-1.8\baselineskip]{Row 1 2} & Cell 1,2 & \lipsum[1][1-2] \\ \cline{2-3}
+			& Cell 2, 2 & \lipsum[2][1-2]\\ \hline
+			Row 3 & Cell 3, 2 & \lipsum[3][1-2] \\ \hline
+		\end{tabular}
+	}
 \end{table}
 
 \end{document}
